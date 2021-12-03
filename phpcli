@@ -1,0 +1,6 @@
+#!/bin/bash
+
+docker run -it --rm --name phpcli \
+  --user "$(id -u):$(id -g)" \
+  -v "$PWD:/workdir" widemos/phpcli \
+  "$@"
