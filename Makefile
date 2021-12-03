@@ -6,17 +6,13 @@ ifneq (,$(wildcard ./.env))
 endif
 
 help:
-	@echo 'Opciones:'
-	@echo '  build | push'
+	@echo 'Usage: make build'
 
 _env:
 	@if [ ! -f .env ]; then cp env-example .env; fi
 
 _build_command:
-	@docker build --build-arg PHP_VERSION=${PHP_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} -t widemos/phpcli .
+	@docker buildx build --platform linux/amd64,linux/arm64 --push --build-arg PHP_VERSION=${PHP_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} -t widemos/phpcli .
 
 build: _env
 	-@$(MAKE) _build_command
-
-push:
-	@docker push widemos/phpcli:latest
